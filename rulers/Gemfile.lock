@@ -1,18 +1,23 @@
 PATH
-  remote: ../rulers
+  remote: .
   specs:
-    rulers (0.0.2)
+    rulers (0.0.1)
       rack
 
 GEM
   remote: https://rubygems.org/
   specs:
+    minitest (5.14.0)
     rack (2.2.2)
+    rack-test (1.1.0)
+      rack (>= 1.0, < 3)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  minitest (~> 5.0)
+  rack-test
   rulers!
 
 BUNDLED WITH

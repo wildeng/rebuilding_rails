@@ -2,11 +2,13 @@
 
 class Object
   def self.const_missing(c)
-    return nil if @const_missing_count > 0
-    @const_missing_counts += 1
+    @calling_const_missing ||={}
+    return nil if @calling_const_missing[c]
     require Rulers.to_underscore(c.to_s)
+    @calling_const_missing[c] = true
     klass = Object.const_get(c)
-    @const_missing_counts = 0
+    @calling_const_missing[c] = 0
+
     klass
   end
 end

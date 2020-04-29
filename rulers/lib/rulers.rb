@@ -4,6 +4,7 @@ require 'rulers/version'
 require 'rulers/routing'
 require 'rulers/dependencies'
 require 'rulers/util'
+require 'rulers/controller'
 
 module Rulers
   class Application
@@ -25,14 +26,4 @@ module Rulers
       [500, {'Content-Type' => 'text/html'}, ["Pretty wild hu?"]]
     end 
   end 
-  
-  class Controller
-    def initialize(env)
-      @env = env
-    end
-
-    def env
-      @env
-    end
-  end
 end

@@ -1,5 +1,17 @@
 <p>
-  ALL: <%= env.inspect %>
+  User Agent: <%= env['HTTP_USER_AGENT'] %>
+</p>
+<p>
+  Request Method: <%= env['REQUEST_METHOD'] %>
+</p>
+<p>
+  Request URI: <%= env['REQUEST_URI'] %>
+</p>
+<p>
+  HTTP Version: <%= env['HTTP_VERSION'] %>
+</p>
+<p>
+  Path Info <%= env['PATH_INFO']%>
 </p>
 <p>
   Path Info <%= env['PATH_INFO']%>

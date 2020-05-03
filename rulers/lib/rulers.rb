@@ -25,6 +25,6 @@ module Rulers
       [200, {'Content-Type' => 'text/html'}, [text]]
     rescue RuntimeError
       [500, {'Content-Type' => 'text/html'}, ["Pretty wild hu?"]]
-    end 
-  end 
+    end
+  end
 end

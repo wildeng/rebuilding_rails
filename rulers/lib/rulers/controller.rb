@@ -1,8 +1,10 @@
 # rulers/lib/rulers/controller.rb
 require 'erubis'
+require 'rulers/file_model'
 
 module Rulers
   class Controller
+    include Rulers::Model
     def initialize(env)
       @env = env
     end
@@ -11,10 +13,10 @@ module Rulers
       @env
     end
 
-    def instance_variables
+    def instance_vars
       vars = {}
-      self.instance_variables.each do |attribute|
-        vars[attribute[1..-1]] = instance_variable_get(attribute.to_sym)
+      instance_variables.each do |name|
+        vars[name[1..-1]] = instance_variable_get name.to_sym
       end
       vars
     end
@@ -25,7 +27,7 @@ module Rulers
       Rulers.to_underscore klass
     end
 
-    def render(view_name, locals = instance_variables)
+    def render(view_name, locals = instance_vars)
       filename = File.join "app", "views",
         controller_name, "#{view_name}.html.erb"
       template = File.read filename
@@ -34,4 +36,3 @@ module Rulers
     end
   end
 end
-

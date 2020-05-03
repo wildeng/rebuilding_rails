@@ -7,3 +7,4 @@
 /spec/reports/
 /tmp/
 rulers-*.gem
+test/tmp/

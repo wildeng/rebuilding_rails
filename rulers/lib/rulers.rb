@@ -21,6 +21,7 @@ module Rulers
       end
       klass, act = get_controller_and_action(env)
       controller = klass.new(env)
+      raise RuntimeError if act == 'update' && env['REQUEST_METHOD'] != 'POST'
       text = controller.send(act)
       [200, {'Content-Type' => 'text/html'}, [text]]
     rescue RuntimeError

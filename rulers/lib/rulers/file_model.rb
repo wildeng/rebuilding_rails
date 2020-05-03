@@ -38,6 +38,7 @@ module Rulers
       end
 
       def save
+         # TODO: explore the use of MultiJson.dump() to improve this method
          template = <<-TEMPLATE
         {
           "submitter": "#{self["submitter"]}",

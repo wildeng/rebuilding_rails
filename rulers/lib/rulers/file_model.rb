@@ -112,6 +112,30 @@ module Rulers
         FileModel.new "#{@@db_folder}/#{id}.json"
       end
 
+      def self.method_missing(method_name, *arguments, &block)
+        if method_name.to_s =~  /^find_all_by_(.*)/
+          attrib = method_name[12..-1]
+          return self.find_all(attrib, arguments[0])
+        else
+          super
+        end
+      end
+
+      def self.respond_to_missing?(method_name, include_private = false)
+        method_name.to_s.start_with?('find_all_by_') || super
+      end
+
+      def self.find_all(attrib, value)
+        results = []
+        id = 1
+        loop do 
+          obj = FileModel.find(id)
+          return results unless obj
+          results.push(obj) if obj[attrib] == value
+          id += 1
+        end
+      end
+
       private
 
       def obj_from_cache

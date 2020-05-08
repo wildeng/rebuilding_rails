@@ -45,6 +45,11 @@ class QuotesController < Rulers::Controller
     render :a_change
   end
 
+  def quotes_by_id
+    quotes = FileModel.find_all_by_id(id: 1)
+    render :index, quotes: quotes  
+  end
+
   def quote_1
     quote_1 = FileModel.find(1)
     render :quote, obj: quote_1

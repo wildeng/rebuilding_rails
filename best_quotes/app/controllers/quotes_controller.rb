@@ -9,6 +9,13 @@ class QuotesController < Rulers::Controller
     render :index, quotes: quotes
   end
 
+  def show
+    @quote = FileModel.find(params['id'])
+    @ua = request.user_agent
+    render_response
+    #render_response :quote, obj: quote, ua: ua
+  end
+
   def update
     # TODO: this needs to be more general
     file_model = FileModel.find(1)

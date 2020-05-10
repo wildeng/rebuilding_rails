@@ -106,9 +106,6 @@ module Rulers
         File.open("#{@@db_folder}/#{id}.json", "w") do |f|
           f.write(template) 
         end
-        if obj_in_cache?
-          remove_obj_from_cache
-        end
         FileModel.new "#{@@db_folder}/#{id}.json"
       end
 

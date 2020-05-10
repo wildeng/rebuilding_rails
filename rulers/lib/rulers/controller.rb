@@ -1,11 +1,14 @@
 # rulers/lib/rulers/controller.rb
 require 'erubis'
 require 'rulers/file_model'
+require 'rulers/view'
 
 module Rulers
   class Controller
     include Rulers::Model
+
     def initialize(env)
+      puts env.inspect
       @env = env
     end
 
@@ -21,6 +24,18 @@ module Rulers
       vars
     end
 
+    def request
+      @request ||= Rack::Request.new(@env)
+    end
+
+    def action
+      @request.env['REQUEST_PATH'].split('/').last
+    end
+
+    def params
+      request.params
+    end
+
     def controller_name
       klass = self.class
       klass = klass.to_s.gsub(/Controller$/,"")
@@ -33,6 +48,23 @@ module Rulers
       template = File.read filename
       eruby = Erubis::Eruby.new(template)
       eruby.result locals.merge(env: env)
+    end
+
+    def response(text, status = 200, headers = {})
+      raise 'already responded' if @response
+      a = [text].flatten
+      @response = Rack::Response.new(a, status, headers)
+    end
+    
+    def get_response
+      @response
+    end
+
+    def render_response(*args)
+      view_name = action if args.empty?
+      view_name = args[0] unless args.empty?
+      #response(render(*args))
+      response(View.new(controller_name, view_name, env, instance_vars ).render)
     end
   end
 end

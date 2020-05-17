@@ -61,10 +61,17 @@ module Rulers
     end
 
     def render_response(*args)
+      locals = {}
       view_name = action if args.empty?
-      view_name = args[0] unless args.empty?
-      #response(render(*args))
-      response(View.new(controller_name, view_name, env, instance_vars ).render)
+      unless args.empty?
+        view_name = args[0] 
+        locals = args[1]
+      end
+      response(
+        View.new(
+          controller_name, view_name, env, instance_vars, locals
+        ).render
+      )
     end
   end
 end

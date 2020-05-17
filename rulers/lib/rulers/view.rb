@@ -3,7 +3,7 @@ require 'erubis'
 
 module Rulers
   class View
-    def initialize(controller_name, view_name, env, instance_vars)
+    def initialize(controller_name, view_name, env, instance_vars, locals)
       @controller_name = controller_name
       @instance_vars = instance_vars
       instance_vars.each do |var|
@@ -11,11 +11,16 @@ module Rulers
         instance_variable_set(name.to_sym, var[1])
       end
       @env = env
+      @locals = locals
       @view_name = view_name
     end
 
     def get_binding
-      binding
+      bind = binding
+      @locals.each do |key, value|
+        bind.local_variable_set(key, value)
+      end
+      bind
     end
 
     def render

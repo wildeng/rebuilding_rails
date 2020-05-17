@@ -5,22 +5,30 @@ PATH
       erubis
       multi_json
       rack
+      sqlite3
 
 GEM
   remote: https://rubygems.org/
   specs:
+    coderay (1.1.2)
     erubis (2.7.0)
+    method_source (1.0.0)
     minitest (5.14.0)
     multi_json (1.14.1)
+    pry (0.13.1)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
     rack (2.2.2)
     rack-test (1.1.0)
       rack (>= 1.0, < 3)
+    sqlite3 (1.4.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
   minitest (~> 5.0)
+  pry
   rack-test
   rulers!
 

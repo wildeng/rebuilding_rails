@@ -40,21 +40,20 @@ class QuotesController < Rulers::Controller
   end
 
   def a_quote
-		@initial_quote = "Initial quote"
-		@final_quote = "Final quote"
-    render :a_quote, noun: :winking
+    @initial_quote = "Initial quote"
+    @final_quote = "Final quote"
+    render_response :a_quote, noun: :winking
   end
 
   def a_change
-		@initial_quote = "Initial change"
-		@final_quote = "Final change"
-
+    @initial_quote = "Initial change"
+    @final_quote = "Final change"
     render :a_change
   end
 
   def quotes_by_id
     quotes = FileModel.find_all_by_id(id: 1)
-    render :index, quotes: quotes  
+    render :index, quotes: quotes
   end
 
   def quote_1

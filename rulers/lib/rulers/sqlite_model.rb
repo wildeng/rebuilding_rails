@@ -7,7 +7,7 @@ DB = SQLite3::Database.new "test.db"
 module Rulers
   module Model
     class SQLite
-      def initialize(data = nil )
+      def initialize(data = {} )
         @hash = data
       end
 
@@ -30,7 +30,7 @@ module Rulers
 
       def save!
         unless @hash["id"]
-          self.class.create
+          self.class.create @hash
           return true
         end
 

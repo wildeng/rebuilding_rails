@@ -12,6 +12,22 @@ module Rulers
       @env = env
     end
 
+    def dispatch(action, routing_params = {})
+      @action = action
+      @routing_params = routing_params
+      text = self.send(action)
+      r = get_response
+      if r
+        [r.status, r.headers, [r.body].flatten]
+      else
+        [200, {'Content-Type' => 'text/html'}, [text].flatten]
+      end
+    end
+
+    def self.action(act, rp = {})
+      proc { |e| self.new(e).dispatch(act, rp) }
+    end
+
     def env
       @env
     end
@@ -28,12 +44,8 @@ module Rulers
       @request ||= Rack::Request.new(@env)
     end
 
-    def action
-      @request.env['REQUEST_PATH'].split('/').last
-    end
-
     def params
-      request.params
+      request.params.merge @routing_params
     end
 
     def controller_name
@@ -55,16 +67,16 @@ module Rulers
       a = [text].flatten
       @response = Rack::Response.new(a, status, headers)
     end
-    
+
     def get_response
       @response
     end
 
     def render_response(*args)
       locals = {}
-      view_name = action if args.empty?
+      view_name = @action if args.empty?
       unless args.empty?
-        view_name = args[0] 
+        view_name = args[0]
         locals = args[1]
       end
       response(
